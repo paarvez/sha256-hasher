@@ -9,18 +9,18 @@ Google may provide), as modified from time to time.
 ___INFO___
 
 {
-  type: MACRO,
-  id: sha256_hasher_sync,
-  version: 1,
-  securityGroups: [],
-  displayName: SHA-256 Hasher,
-  description: Converts any text or variable value into a SHA-256, MD5, or Base64 hash with formatting and normalization options.,
-  categories: [
-    UTILITY,
-    PRIVACY
+  "type": "MACRO",
+  "id": "sha256_hasher_sync",
+  "version": 1,
+  "securityGroups": [],
+  "displayName": "SHA-256 Hasher",
+  "description": "Converts any text or variable value into a SHA-256, MD5, or Base64 hash with formatting and normalization options.",
+  "categories": [
+    "UTILITY",
+    "PRIVACY"
   ],
-  containerContexts: [
-    WEB
+  "containerContexts": [
+    "WEB"
   ]
 }
 
@@ -29,75 +29,76 @@ ___TEMPLATE_PARAMETERS___
 
 [
   {
-    type: TEXT,
-    name: input,
-    displayName: Value to Hash,
-    simpleValueType: true,
-    help: Enter a value or select a GTM variable (e.g. {{DLV - email}}).,
-    valueValidators: [
+    "type": "TEXT",
+    "name": "input",
+    "displayName": "Value to Hash",
+    "simpleValueType": true,
+    "help": "Enter a value or select a GTM variable (e.g. {{DLV - email}}).",
+    "valueValidators": [
       {
-        type: NON_EMPTY
+        "type": "NON_EMPTY"
       }
     ]
   },
   {
-    type: SELECT,
-    name: hash_format,
-    displayName: Hash / Output Format,
-    selectItems: [
+    "type": "SELECT",
+    "name": "hash_format",
+    "displayName": "Hash / Output Format",
+    "selectItems": [
       {
-        value: sha256_hex,
-        displayValue: SHA-256 (HEX - standard)
+        "value": "sha256_hex",
+        "displayValue": "SHA-256 (HEX - standard)"
       },
       {
-        value: sha256_base64,
-        displayValue: SHA-256 (Base64)
+        "value": "sha256_base64",
+        "displayValue": "SHA-256 (Base64)"
       },
       {
-        value: md5_hex,
-        displayValue: MD5 (HEX)
+        "value": "md5_hex",
+        "displayValue": "MD5 (HEX)"
       },
       {
-        value: md5_base64,
-        displayValue: MD5 (Base64)
+        "value": "md5_base64",
+        "displayValue": "MD5 (Base64)"
       },
       {
-        value: base64,
-        displayValue: Base64 (Raw encoding)
+        "value": "base64",
+        "displayValue": "Base64 (Raw encoding)"
       },
       {
-        value: none,
-        displayValue: None (Normalization only)
+        "value": "none",
+        "displayValue": "None (Normalization only)"
       }
     ],
-    defaultValue: sha256_hex,
-    simpleValueType: true
+    "defaultValue": "sha256_hex",
+    "simpleValueType": true
   },
   {
-    type: GROUP,
-    name: normalization_group,
-    displayName: Normalization Options,
-    subParams: [
+    "type": "GROUP",
+    "name": "normalization_group",
+    "displayName": "Normalization Options",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
       {
-        type: CHECKBOX,
-        name: trim_spaces,
-        checkboxText: Trim leading & trailing whitespace,
-        defaultValue: true,
-        simpleValueType: true
+        "type": "CHECKBOX",
+        "name": "trim_spaces",
+        "checkboxText": "Trim leading and trailing whitespace",
+        "defaultValue": true,
+        "simpleValueType": true
       },
       {
-        type: CHECKBOX,
-        name: to_lowercase,
-        checkboxText: Convert to lowercase,
-        defaultValue: true,
-        simpleValueType: true
+        "type": "CHECKBOX",
+        "name": "to_lowercase",
+        "checkboxText": "Convert to lowercase",
+        "defaultValue": true,
+        "simpleValueType": true
       },
       {
-        type: CHECKBOX,
-        name: phone_format,
-        checkboxText: Format as phone number (strip special characters),
-        defaultValue: false,
-        simpleValueType: true
+        "type": "CHECKBOX",
+        "name": "phone_format",
+        "checkboxText": "Format as phone number (strip special characters)",
+        "defaultValue": false,
+        "simpleValueType": true
       }
     ]
   }
@@ -125,10 +126,10 @@ if (data.to_lowercase !== false) {
 }
 if (data.phone_format === true) {
   var cleaned = '';
-  for (var k = 0; k < s.length; k++) {
+  for (var k = 0; k < s.length; k = k + 1) {
     var c = s.charAt(k);
     if ((c >= '0' && c <= '9') || (k === 0 && c === '+')) {
-      cleaned += c;
+      cleaned = cleaned + c;
     }
   }
   s = cleaned;
@@ -184,7 +185,7 @@ while (j < encoded.length) {
           bytes.push(126);
         } else if (ch === '*') {
           bytes.push(42);
-        } else if (ch === ') {
+        } else if (ch === "'") {
           bytes.push(39);
         } else if (ch === '(') {
           bytes.push(40);
@@ -201,9 +202,9 @@ while (j < encoded.length) {
 
 function bytesToHex(arr) {
   var res = '';
-  for (var i = 0; i < arr.length; i++) {
+  for (var i = 0; i < arr.length; i = i + 1) {
     var b = arr[i];
-    res += HEX.charAt((b >>> 4) & 15) + HEX.charAt(b & 15);
+    res = res + HEX.charAt((b >>> 4) & 15) + HEX.charAt(b & 15);
   }
   return res;
 }
@@ -212,25 +213,25 @@ function bytesToBase64(arr) {
   var B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   var res = '';
   var i = 0;
-  for (i = 0; i + 2 < arr.length; i += 3) {
+  for (i = 0; i + 2 < arr.length; i = i + 3) {
     var n = (arr[i] << 16) | (arr[i + 1] << 8) | arr[i + 2];
-    res += B64.charAt((n >>> 18) & 63);
-    res += B64.charAt((n >>> 12) & 63);
-    res += B64.charAt((n >>> 6) & 63);
-    res += B64.charAt(n & 63);
+    res = res + B64.charAt((n >>> 18) & 63);
+    res = res + B64.charAt((n >>> 12) & 63);
+    res = res + B64.charAt((n >>> 6) & 63);
+    res = res + B64.charAt(n & 63);
   }
   if (i < arr.length) {
     var rem = arr.length - i;
     var n2 = arr[i] << 16;
     if (rem === 2) {
-      n2 |= arr[i + 1] << 8;
+      n2 = n2 | (arr[i + 1] << 8);
     }
-    res += B64.charAt((n2 >>> 18) & 63);
-    res += B64.charAt((n2 >>> 12) & 63);
+    res = res + B64.charAt((n2 >>> 18) & 63);
+    res = res + B64.charAt((n2 >>> 12) & 63);
     if (rem === 2) {
-      res += B64.charAt((n2 >>> 6) & 63) + '=';
+      res = res + B64.charAt((n2 >>> 6) & 63) + '=';
     } else {
-      res += '==';
+      res = res + '==';
     }
   }
   return res;
@@ -370,7 +371,7 @@ function computeMD5(inputBytes) {
     1873313359,4264355552,2734768916,1309151649,4149444226,3174756917,718787259,3951481745
   ];
 
-  for (var p = 0; p < b.length; p = p + 64) {
+  for (var p = 0; p < b.length; p += 64) {
     var M = [];
     for (var i = 0; i < 16; i = i + 1) {
       M[i] = b[p + i * 4] | (b[p + i * 4 + 1] << 8) | (b[p + i * 4 + 2] << 16) | (b[p + i * 4 + 3] << 24);
@@ -437,6 +438,11 @@ if (format === 'md5_base64') {
 return '';
 
 
+___WEB_PERMISSIONS___
+
+[]
+
+
 ___TESTS___
 
 scenarios: []
@@ -444,4 +450,4 @@ scenarios: []
 
 ___NOTES___
 
-Updated with multi-format hashing (SHA-256 Hex/Base64, MD5 Hex/Base64, Base64, Normalization)
+Created on 24/04/2026, 20:48:18
