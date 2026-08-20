@@ -53,6 +53,13 @@ This template embeds a synchronous, pure-JS UTF-8 digest engine directly into th
 
 ---
 
+## Developer
+
+**Md Kalimullah** — Web Analytics Pro  
+LinkedIn: [https://www.linkedin.com/in/kalimullahh/](https://www.linkedin.com/in/kalimullahh/)
+
+---
+
 ## License
 
 Apache 2.0

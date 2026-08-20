@@ -215,10 +215,10 @@ function bytesToBase64(arr) {
   var i = 0;
   for (i = 0; i + 2 < arr.length; i = i + 3) {
     var n = (arr[i] << 16) | (arr[i + 1] << 8) | arr[i + 2];
-    res = res + B64.charAt((n >>> 18) & 63);
-    res = res + B64.charAt((n >>> 12) & 63);
-    res = res + B64.charAt((n >>> 6) & 63);
-    res = res + B64.charAt(n & 63);
+    res += B64.charAt((n >>> 18) & 63);
+    res += B64.charAt((n >>> 12) & 63);
+    res += B64.charAt((n >>> 6) & 63);
+    res += B64.charAt(n & 63);
   }
   if (i < arr.length) {
     var rem = arr.length - i;
@@ -450,4 +450,5 @@ scenarios: []
 
 ___NOTES___
 
-Created on 24/04/2026, 20:48:18
+Developer: Md Kalimullah (Web Analytics Pro)
+LinkedIn: https://www.linkedin.com/in/kalimullahh/
